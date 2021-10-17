@@ -22,5 +22,5 @@ export class UserType {
   salt: string;
 
   @Field()
-  role: UserRole.USER;
+  role: UserRole;
 }

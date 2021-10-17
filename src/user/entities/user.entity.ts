@@ -5,7 +5,7 @@ import {
   PrimaryGeneratedColumn,
   Unique,
 } from 'typeorm';
-import { UserRole } from '../config/user.enum';
+import { UserRole } from '../../config/user.enum';
 import * as bcrypt from 'bcrypt';
 
 @Entity()
