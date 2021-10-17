@@ -3,17 +3,22 @@ import {
   InternalServerErrorException,
 } from '@nestjs/common';
 import { EntityRepository, Repository } from 'typeorm';
-import { AuthCredentialsDto } from './dto/auth-credentials.dto';
 import { User } from './user.entity';
 import * as bcrypt from 'bcrypt';
+import { CreateUserInput } from './create-user.input';
+import { UserRole } from '../config/user.enum';
+import { AuthCredentialsInput } from './auth-credentials.input';
 
-@EntityRepository()
+@EntityRepository(User)
 export class UserRepository extends Repository<User> {
-  async signUp(authCreadentialsDto: AuthCredentialsDto): Promise<void> {
-    const { email, password } = authCreadentialsDto;
+  async createUser(createUserInput: CreateUserInput): Promise<User> {
+    const { firstname, lastname, email, password } = createUserInput;
 
     const user = new User();
+    user.firstname = firstname;
+    user.lastname = lastname;
     user.email = email;
+    user.role = UserRole.USER;
     user.salt = await bcrypt.genSalt();
     user.password = await this.hashPassword(password, user.salt);
     console.log(user.password);
@@ -21,19 +26,19 @@ export class UserRepository extends Repository<User> {
     try {
       await user.save();
     } catch (error) {
-      console.log(typeof error.code);
       if (error.code === '23505') {
         throw new ConflictException('The user already exists!');
       } else {
         throw new InternalServerErrorException();
       }
     }
+    return user;
   }
 
   async validateUserPassword(
-    authCredentialsDto: AuthCredentialsDto,
+    authCredentialsInput: AuthCredentialsInput,
   ): Promise<string> {
-    const { email, password } = authCredentialsDto;
+    const { email, password } = authCredentialsInput;
     const user = await this.findOne({ email });
     console.log(user);
 
