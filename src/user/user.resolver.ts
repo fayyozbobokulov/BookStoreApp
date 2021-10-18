@@ -1,14 +1,19 @@
 import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
-import { AccessTokenType } from './accessToken.type';
+import { AccessTokenType } from '../jwt/accessToken.type';
 import { CreateUserInput } from './create-user.input';
 import { AuthCredentialsInput } from './auth-credentials.input';
-import { User } from './entities/user.entity';
+import { User } from './user.entity';
 import { UserService } from './user.service';
-import { UserType } from './types/user.type';
+import { UserType } from './user.type';
 
 @Resolver((of) => UserType)
 export class UserResolver {
   constructor(private userService: UserService) {}
+
+  @Query(() => String)
+  sayHello(): string {
+    return 'Hello World!';
+  }
 
   @Mutation((returns) => UserType)
   async createUser(
@@ -16,11 +21,6 @@ export class UserResolver {
   ): Promise<User> {
     console.log('Resolver working');
     return this.userService.signUp(createUserInput);
-  }
-
-  @Query(() => String)
-  sayHello(): string {
-    return 'Hello World!';
   }
 
   @Mutation((returns) => AccessTokenType)

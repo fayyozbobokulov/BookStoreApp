@@ -3,22 +3,22 @@ import {
   InternalServerErrorException,
 } from '@nestjs/common';
 import { EntityRepository, Repository } from 'typeorm';
-import { User } from '../entities/user.entity';
+import { User } from './user.entity';
 import * as bcrypt from 'bcrypt';
-import { CreateUserInput } from '../create-user.input';
-import { UserRole } from '../../config/user.enum';
-import { AuthCredentialsInput } from '../auth-credentials.input';
+import { CreateUserInput } from './create-user.input';
+import { UserRole } from '../config/user.enum';
+import { AuthCredentialsInput } from './auth-credentials.input';
 
 @EntityRepository(User)
 export class UserRepository extends Repository<User> {
   async createUser(createUserInput: CreateUserInput): Promise<User> {
-    const { firstname, lastname, email, password } = createUserInput;
+    const { firstname, lastname, email, password, role } = createUserInput;
 
     const user = new User();
     user.firstname = firstname;
     user.lastname = lastname;
     user.email = email;
-    user.role = UserRole.USER;
+    user.role = this.findUserRole(role);
     user.salt = await bcrypt.genSalt();
     user.password = await this.hashPassword(password, user.salt);
     console.log(user.password);
@@ -51,5 +51,19 @@ export class UserRepository extends Repository<User> {
 
   private async hashPassword(password: string, salt: string): Promise<string> {
     return bcrypt.hash(password, salt);
+  }
+
+  private findUserRole(role: string): UserRole | null {
+    role = role.toUpperCase();
+    switch (role) {
+      case 'ADMIN':
+        return UserRole.ADMIN;
+      case 'MANAGER':
+        return UserRole.MANAGER;
+      case 'USER':
+        return UserRole.USER;
+      default:
+        throw new ConflictException('Invalid User Role!');
+    }
   }
 }

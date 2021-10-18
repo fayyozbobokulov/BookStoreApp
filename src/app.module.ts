@@ -3,6 +3,9 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { typeOrmConfig } from './config/typeorm.config';
 import { UserModule } from './user/user.module';
 import { GraphQLModule } from '@nestjs/graphql';
+import { AuthorModule } from './author/author.module';
+import { BookModule } from './book/book.module';
+import { GenreModule } from './genre/genre.module';
 
 @Module({
   imports: [
@@ -11,6 +14,9 @@ import { GraphQLModule } from '@nestjs/graphql';
     GraphQLModule.forRoot({
       autoSchemaFile: true,
     }),
+    AuthorModule,
+    BookModule,
+    GenreModule,
   ],
 })
 export class AppModule {}

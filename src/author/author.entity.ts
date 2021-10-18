@@ -1,12 +1,13 @@
+import { Book } from '../book/book.entity';
 import {
   BaseEntity,
   Column,
   Entity,
+  JoinTable,
   ManyToMany,
   PrimaryGeneratedColumn,
 } from 'typeorm';
-import { Book } from './book.entity';
-import { Genre } from './genre.entity';
+// import { Genre } from '../genre/genre.entity';
 
 @Entity()
 export class Author extends BaseEntity {
@@ -19,9 +20,7 @@ export class Author extends BaseEntity {
   @Column()
   lastname: string;
 
-  @ManyToMany((type) => Book, (book) => book.authors, { eager: true })
-  books: number[];
-
-  @ManyToMany((type) => Genre, (genre) => genre.authors, { eager: false })
-  genres: number[];
+  // @ManyToMany((type) => Genre, { cascade: true })
+  // @JoinTable()
+  // genres: Genre[];
 }

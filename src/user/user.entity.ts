@@ -5,7 +5,7 @@ import {
   PrimaryGeneratedColumn,
   Unique,
 } from 'typeorm';
-import { UserRole } from '../../config/user.enum';
+import { UserRole } from '../config/user.enum';
 import * as bcrypt from 'bcrypt';
 
 @Entity()
@@ -29,7 +29,7 @@ export class User extends BaseEntity {
   @Column()
   salt: string;
 
-  @Column()
+  @Column({ default: UserRole.ADMIN })
   role: UserRole;
 
   async validatePassword(password: string): Promise<boolean> {
