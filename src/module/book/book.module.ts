@@ -1,0 +1,11 @@
+import { Module } from '@nestjs/common';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { BookRespository } from './book.repository';
+import { BookResolver } from './book.resolver';
+import { BookService } from './book.service';
+
+@Module({
+  imports: [TypeOrmModule.forFeature([BookRespository])],
+  providers: [BookService, BookResolver],
+})
+export class BookModule {}

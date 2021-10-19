@@ -5,6 +5,8 @@ import { AuthCredentialsInput } from './auth-credentials.input';
 import { User } from './user.entity';
 import { UserService } from './user.service';
 import { UserType } from './user.type';
+import { Book } from '../module/book/book.entity';
+import { BookType } from '../module/book/book.type';
 
 @Resolver((of) => UserType)
 export class UserResolver {
@@ -30,13 +32,13 @@ export class UserResolver {
     return this.userService.signIn(authCredentialsInput);
   }
 
-  // @Query((returns) => BookType)
-  // getBook(@Args('id') id: number): Promise<Book> {
-  //   return;
-  // }
+  @Query((returns) => BookType)
+  getBook(@Args('id') id: number): Promise<Book> {
+    return;
+  }
 
-  // @Query((returns) => [BookType])
-  // getBooks(): Promise<Book[]> {
-  //   return;
-  // }
+  @Query((returns) => [BookType])
+  getBooks(): Promise<Book[]> {
+    return;
+  }
 }

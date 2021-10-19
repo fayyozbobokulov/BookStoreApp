@@ -6,7 +6,7 @@ import {
   ManyToMany,
   PrimaryGeneratedColumn,
 } from 'typeorm';
-import { Book } from 'src/book/book.entity';
+import { Book } from 'src/module/book/book.entity';
 
 @Entity()
 export class Genre extends BaseEntity {

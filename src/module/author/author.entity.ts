@@ -1,4 +1,3 @@
-import { Book } from '../book/book.entity';
 import {
   BaseEntity,
   Column,
@@ -7,6 +6,7 @@ import {
   ManyToMany,
   PrimaryGeneratedColumn,
 } from 'typeorm';
+import { Book } from '../book/book.entity';
 import { Genre } from '../genre/genre.entity';
 
 @Entity()

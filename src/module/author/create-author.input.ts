@@ -8,7 +8,6 @@ import {
   ValidateNested,
 } from 'class-validator';
 import { Genre } from '../genre/genre.entity';
-// import { Genre } from '../genre/genre.entity';
 
 @InputType()
 export class CreateAuthorInput {
@@ -20,7 +19,7 @@ export class CreateAuthorInput {
   @Field()
   lastname: string;
 
-  // @ArrayMinSize(1)
-  // @Field((type) => [Genre])
-  // genres: Genre[];
+  @ArrayMinSize(1)
+  @Field((type) => [Genre])
+  genres: Genre[];
 }

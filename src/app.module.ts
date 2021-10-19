@@ -3,9 +3,9 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { typeOrmConfig } from './config/typeorm.config';
 import { UserModule } from './user/user.module';
 import { GraphQLModule } from '@nestjs/graphql';
-import { AuthorModule } from './author/author.module';
-import { BookModule } from './book/book.module';
-import { GenreModule } from './genre/genre.module';
+import { BookModule } from './module/book/book.module';
+import { GenreModule } from './module/genre/genre.module';
+import { AuthorModule } from './module/author/author.module';
 
 @Module({
   imports: [
@@ -13,6 +13,7 @@ import { GenreModule } from './genre/genre.module';
     TypeOrmModule.forRoot(typeOrmConfig),
     GraphQLModule.forRoot({
       autoSchemaFile: true,
+      context: ({ req }) => ({ req }),
     }),
     AuthorModule,
     BookModule,

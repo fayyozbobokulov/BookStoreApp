@@ -1,4 +1,3 @@
-import { Genre } from '../genre/genre.entity';
 import {
   BaseEntity,
   Column,
@@ -8,6 +7,7 @@ import {
   PrimaryGeneratedColumn,
 } from 'typeorm';
 import { Author } from '../author/author.entity';
+import { Genre } from '../genre/genre.entity';
 
 @Entity()
 export class Book extends BaseEntity {
